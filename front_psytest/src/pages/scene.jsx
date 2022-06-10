@@ -118,7 +118,7 @@ export class Scene extends React.Component {
     }
 
     if (action.choice == 'Выход') {
-      this.handleClick(-1);
+      this.handleClick(10);
     }
 
     if (action.choice == 'Да') {
