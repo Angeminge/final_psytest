@@ -1,0 +1,62 @@
+.centerBut {
+    background-size: contain !important;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+}
+
+@media screen and (min-width: 0px) and (max-width: 559px) {
+    .centerBut {
+        margin-left: 0%;
+    }
+}
+
+@media screen and (min-width: 560px) and (max-width: 768px) {
+    .centerBut {
+        margin-left: 0%;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 959px){
+    .centerBut {
+        margin-left: 0%;
+    }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1118px){
+    .centerBut {
+        margin-left: 0%;
+        margin-top: 0%;
+    }
+}
+
+@media screen and (width: 1080px) and (height: 1920px){
+    .centerBut {
+        margin-left: 1%;
+        margin-top: 0%;
+    }
+}
+
+@media screen and (min-width: 1120px) and (max-width: 1536px){
+    .centerBut {
+        margin-top: 0%;
+        margin-bottom: 0%;
+        margin-left: 0%;
+    }
+}
+
+@media screen and (min-width: 1538px) and (max-width: 1918px){
+    .centerBut {
+        margin-top: 5%;
+        margin-bottom: 0%;
+        margin-left: 0%;
+    }
+}
+
+@media screen and (min-width: 1920px){
+    .centerBut {
+        margin-top: 5%;
+        margin-bottom: 0%;
+        margin-left: 0%;
+    }
+}

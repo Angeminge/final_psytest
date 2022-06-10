@@ -1,0 +1,93 @@
+.centerInd {
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 1%;
+    /* background-size: contain !important; */
+    margin-left: 50%;
+    /* margin-top: 5%; */
+    margin-bottom: 5%;
+}
+
+@media screen and (min-width: 0px) and (max-width: 559px) {
+    .centerInd {
+        position: unset;
+        display: flex;
+        justify-content: center;
+        margin-left: 20%;
+    }
+}
+
+@media screen and (min-width: 560px) and (max-width: 768px) {
+    .centerInd {
+        display: flex;
+        justify-content: center;
+        margin-left: 50%;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 959px){
+    .centerInd {
+        display: flex;
+        justify-content: center;
+        margin-left: 50%;
+    }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1118px){
+    .centerInd {
+        display: flex;
+        justify-content: center;
+        margin-left: 0%;
+    }
+}
+
+@media screen and (width: 1080px) and (height: 1920px){
+    .centerInd{
+        display: flex;
+        justify-content: center;
+        margin-left: 0%;
+        margin-top: 5%;
+    }
+}
+
+@media screen and (width: 1080px) and (height: 1920px){
+    .centerInd {
+        position: unset;
+        display: flex;
+        justify-content: center;
+        margin-left: 0%;
+    }
+}
+
+@media screen and (min-width: 1120px) and (max-width: 1536px){
+    .centerInd {
+        display: flex;
+        justify-content: center;
+        margin-top: 1%;
+        margin-bottom: 3%;
+        margin-left: 20%;
+    }
+}
+
+@media screen and (min-width: 1538px) and (max-width: 1918px){
+    .centerInd {
+        display: flex;
+        justify-content: center;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        margin-left: 20%;
+    }
+}
+
+@media screen and (min-width: 1920px){
+    .centerInd {
+        display: flex;
+        justify-content: center;
+        margin-top: 0%;
+        margin-bottom: 3%;
+        margin-left: 30%;
+    }
+}
