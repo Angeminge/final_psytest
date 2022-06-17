@@ -180,7 +180,7 @@ export class Scene extends React.Component {
                 <img src={'/images/'+ scene.type.img} width={400}/>
               </Col>
               <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
-                <h1 className='result-h'>{scene.type.name}</h1>
+                <h1 className='result-h'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
                 <p className='result-p'>{scene.type.description}</p>
               </Col>
             </Row>
@@ -248,6 +248,7 @@ export class Scene extends React.Component {
       return (<Spinner className='spinnerWrapper'/>);
     }
   }
+}
 }
 
 export default Scene;
