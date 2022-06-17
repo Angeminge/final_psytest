@@ -25,7 +25,7 @@ import { PsyTestChart } from '../components/Chart.jsx';
 import ProgressBar from "../components/ProgressBar";
 
 
-let characterID;
+var characterID = '';
 
 const setBackground = {
   backgroundImage: ''
