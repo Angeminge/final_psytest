@@ -243,8 +243,7 @@ export class Scene extends React.Component {
               </div>
           );
         }
-      }
-    } 
+      } 
 }
 else {
       return (<Spinner className='spinnerWrapper'/>);
