@@ -12,7 +12,7 @@
 }
 .chart{
     float: right;
-    alignment: right;
+    alignment: center;
 }
 
 .incol{
@@ -26,10 +26,8 @@
 }
 .incol-chart{
     position: center;
-    margin-top: 15px;
-
+    offset-position: left;
 }
-
 
 .img-Wrapper {
     background-size: contain !important;

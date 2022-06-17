@@ -145,6 +145,12 @@ export class Scene extends React.Component {
     
     const { scene, backgroundImage } = this.state;
     console.log("SCENE ", scene);
+    let size = 300;
+    if (document.documentElement.clientWidth>=1.5*document.documentElement.clientHeight){
+      size = document.documentElement.clientWidth*0.3;
+    }
+    else{
+      size = document.documentElement.clientWidth*0.9;
     if (scene) {
       if (scene.intro) {
         return(
@@ -174,7 +180,7 @@ export class Scene extends React.Component {
                 <img src={'/images/'+ scene.type.img} width={400}/>
               </Col>
               <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
-                <h1 className='result-h'>{'Вы - '+ scene.type.name}</h1>
+                <h1 className='result-h'>{scene.type.name}</h1>
                 <p className='result-p'>{scene.type.description}</p>
               </Col>
             </Row>
@@ -194,7 +200,8 @@ export class Scene extends React.Component {
                             <Button key={item.id}
                                     scaleOnInteraction={false}
                                     scaleOnHover={false}
-                                    scaleOnPress={false}                                    style={{marginBottom: '12px', width: '100%'}}
+                                    scaleOnPress={false}
+                                    style={{marginBottom: '12px', width: '100%'}}
                                     stretch={true} size="s"
                                     onClick={() => this.push({choice: item.text[0]})}>
                               <div className='butTextWrapper'> {item.text[0]} </div>
