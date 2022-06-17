@@ -1,4 +1,5 @@
 import React from "react";
+import {Container} from "@sberdevices/ui";
 import {
     ReferenceLine,
     ScatterChart,
@@ -14,12 +15,14 @@ import {
 export const PsyTestChart = (n, e, size) => {
     const data = [{ neuroticism: n, extravertism: e }];
     return (
+        <Container aria-setsize={size} padding-left='inherit'>
         <ScatterChart
-            width={size}
-            height={size}
+            width={size*0.8}
+            height={size*0.8}
             data={data}
             fill="white"
-            margin={{top: 30, right: 25, bottom: 30, left: 20}}
+            margin={{top: 30, right: 30, bottom: 30, left: 0}}
+            position="left"
         >
             <CartesianGrid stroke="#606060" strokeDasharray="5 5"/>
             <Tooltip />
@@ -52,5 +55,6 @@ export const PsyTestChart = (n, e, size) => {
 
             <Scatter dataKey="neuroticism" fill="#21A038" shape={<Dot r={10}/>}/>
         </ScatterChart>
+        </Container>
     );
 }
