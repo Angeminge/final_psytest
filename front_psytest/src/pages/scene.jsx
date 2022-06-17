@@ -244,7 +244,9 @@ export class Scene extends React.Component {
           );
         }
       }
-    } else {
+    } 
+}
+else {
       return (<Spinner className='spinnerWrapper'/>);
     }
   }
