@@ -69,6 +69,7 @@ export class Scene extends React.Component {
     };
 
     this.assistant = initializeAssistant(() => this.getStateForAssistant() );
+
     
     this.assistant.on('start', () => {
       console.log('SmartApp started');
@@ -76,6 +77,11 @@ export class Scene extends React.Component {
 
     this.assistant.on('data', data => {
       console.log(data);
+
+      if (data.type === 'character') {
+        characterID = data.character.id;
+      }
+
       if (data.type == 'smart_app_data') {
         this.state = data.smart_app_data;
         this.setState({scene: this.state});
@@ -145,7 +151,7 @@ export class Scene extends React.Component {
           <>
               < >
               <Col type="calc" offsetS={1} offsetM={2} offsetL={3} offsetXL={4} sizeS={1} sizeM={2} sizeL={3} sizeXL={4} />
-              <h1 className='textWrapper'> { scene.question.texts } </h1>
+              <h1 className='textWrapper'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
               {
                 scene.question.options.map((item) => {
                   return (
@@ -180,7 +186,7 @@ export class Scene extends React.Component {
               <Row className="inline">
                 <Col className="inline-content" type="rel">
                   <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
-                  <h1 className='centerText'> {scene.question.texts} </h1>
+                  <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
                   {
                     scene.question.options.map((item) => {
                       return (
@@ -207,7 +213,7 @@ export class Scene extends React.Component {
               <div className="incol" >
                 <div className="incol-content">
                   <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
-                  <h1 className='centerText'> {scene.question.texts } </h1>
+                  <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts  } </h1>
                   {
                     scene.question.options.map((item) => {
                       return (
