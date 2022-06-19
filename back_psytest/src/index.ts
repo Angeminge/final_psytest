@@ -1,6 +1,4 @@
 import { Dialute, SberRequest } from 'dialute';
-import e from 'express';
-import { stat } from 'fs';
 import { data } from './data';
 import { psytypes } from './psytypes';
 
@@ -113,8 +111,8 @@ function* script(r: SberRequest) {
   }
 
   startState();
-  rsp.msg = 'Добро пожаловать!';
-  rsp.msgJ = 'Привет!';
+  rsp.msg = questions[0].texts;
+  rsp.msgJ = questions[0].textj;
   yield rsp;
 
   while (state.id <= 56){
@@ -134,7 +132,7 @@ function* script(r: SberRequest) {
       yield rsp;
       continue;
     }
-    else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "SERVER_ACTION" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+    else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
       rsp.data = {type: 'mark'};
       rsp.msg = 'Спасибо за оценку';}
 
@@ -149,7 +147,7 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
-    else if (r.nlu.lemmaIntersection(['оценить'])) {
+    else if (checkArray(r, ['оценить'])) {
       rsp.msg = 'Оценивание';
       rsp.body.messageName = 'CALL_RATING';
   }
