@@ -3,7 +3,7 @@ import { data } from './data';
 import { psytypes } from './psytypes';
 
 const questions = data;
-let value = ['оцен'];
+var flag = false;
 
 function* script(r: SberRequest) {
   const rsp = r.buildRsp();
@@ -134,9 +134,12 @@ function* script(r: SberRequest) {
       yield rsp;
       continue;
     }
-    else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+    else if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
       rsp.data = {type: 'mark'};
-      rsp.msg = 'Спасибо за оценку';}
+      rsp.msg = 'Спасибо за оценку';
+      yield rsp;
+      continue;
+    }
 
     else if (r.nlu.lemmaIntersection(['выход', 'выйти', 'выйди'])) {
       rsp.msg = 'Всего вам доброго!';
