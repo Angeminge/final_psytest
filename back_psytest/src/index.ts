@@ -5,10 +5,11 @@ import { data } from './data';
 import { psytypes } from './psytypes';
 
 const questions = data;
+let value = ['оцен'];
 
 function* script(r: SberRequest) {
   const rsp = r.buildRsp();
-
+  rsp.kbrd = ['Оценить'];  
   const state = {
     id: 0,
     e: 0,
@@ -117,6 +118,7 @@ function* script(r: SberRequest) {
   yield rsp;
 
   while (state.id <= 56){
+    rsp.kbrd = ['Оценить'];
     if (r.type === 'SERVER_ACTION'){
       console.log(r.act?.action_id)
       if (r.act?.action_id == 'click'){
@@ -132,6 +134,10 @@ function* script(r: SberRequest) {
       yield rsp;
       continue;
     }
+    else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "SERVER_ACTION" &&
+      r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+      rsp.data = {type: 'mark'};
+      rsp.msg = 'Спасибо за оценку';}
 
     else if (r.nlu.lemmaIntersection(['выход', 'выйти', 'выйди'])) {
       rsp.msg = 'Всего вам доброго!';
