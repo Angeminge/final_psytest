@@ -137,6 +137,7 @@ function* script(r: SberRequest) {
     else if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
       rsp.data = {type: 'mark'};
       rsp.msg = 'Спасибо за оценку';
+      flag = true;
       yield rsp;
       continue;
     }
