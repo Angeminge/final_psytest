@@ -162,7 +162,7 @@ export class Scene extends React.Component {
                 scene.question.options.map((item) => {
                   return (
                     <Row>
-                      <Button scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false}>
+                      <Button scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={false}>
                       <div className='butTextWrapper'> {item.text[0]} </div>
                       </Button>
                     </Row>
@@ -204,7 +204,8 @@ export class Scene extends React.Component {
                                     style={{marginBottom: '12px', width: '100%'}}
                                     stretch={true} size="s"
                                     onClick={() => this.push({choice: item.text[0]})}
-                                    focused={false}>
+                                    focused={false}
+                                    outlined={false}>
                               <div className='butTextWrapper'> {item.text[0]} </div>
                             </Button>
                           </Row>);
@@ -232,7 +233,8 @@ export class Scene extends React.Component {
                                     style={{ marginBottom: '12px', width: '100%' }}
                                     stretch={true} size="s"
                                     onClick={ () => this.push({choice: item.text[0]}) }
-                                    focused={false}>
+                                    focused={false}
+                                    outlined={false}>
                               <div className='butTextWrapper'> {item.text[0]} </div>
                             </Button>
                           </Row>);
