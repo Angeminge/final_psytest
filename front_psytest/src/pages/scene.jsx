@@ -25,7 +25,7 @@ import { PsyTestChart } from '../components/Chart.jsx';
 import ProgressBar from "../components/ProgressBar";
 
 
-let characterID;
+var characterID = '';
 
 const setBackground = {
   backgroundImage: ''
@@ -69,6 +69,7 @@ export class Scene extends React.Component {
     };
 
     this.assistant = initializeAssistant(() => this.getStateForAssistant() );
+
     
     this.assistant.on('start', () => {
       console.log('SmartApp started');
@@ -76,6 +77,11 @@ export class Scene extends React.Component {
 
     this.assistant.on('data', data => {
       console.log(data);
+
+      if (data.type === 'character') {
+        characterID = data.character.id;
+      }
+
       if (data.type == 'smart_app_data') {
         this.state = data.smart_app_data;
         this.setState({scene: this.state});
@@ -151,7 +157,7 @@ export class Scene extends React.Component {
           <>
               < >
               <Col type="calc" offsetS={1} offsetM={2} offsetL={3} offsetXL={4} sizeS={1} sizeM={2} sizeL={3} sizeXL={4} />
-              <h1 className='textWrapper'> { scene.question.texts } </h1>
+              <h1 className='textWrapper'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
               {
                 scene.question.options.map((item) => {
                   return (
@@ -174,7 +180,7 @@ export class Scene extends React.Component {
                 <img src={'/images/'+ scene.type.img} width={400}/>
               </Col>
               <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
-                <h1 className='result-h'>{scene.type.name}</h1>
+                <h1 className='result-h'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
                 <p className='result-p'>{scene.type.description}</p>
               </Col>
             </Row>
@@ -186,7 +192,7 @@ export class Scene extends React.Component {
               <Row className="inline">
                 <Col className="inline-content" type="rel">
                   <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
-                  <h1 className='centerText'> {scene.question.texts} </h1>
+                  <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
                   {
                     scene.question.options.map((item) => {
                       return (
@@ -214,7 +220,7 @@ export class Scene extends React.Component {
               <div className="incol" >
                 <div className="incol-content">
                   <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
-                  <h1 className='centerText'> {scene.question.texts } </h1>
+                  <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts  } </h1>
                   {
                     scene.question.options.map((item) => {
                       return (
@@ -237,8 +243,9 @@ export class Scene extends React.Component {
               </div>
           );
         }
-      }
-    } else {
+      } 
+}
+else {
       return (<Spinner className='spinnerWrapper'/>);
     }
   }
