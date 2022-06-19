@@ -1,5 +1,4 @@
 import { Dialute, SberRequest } from 'dialute';
-import { stat } from 'fs';
 import { data } from './data';
 import { psytypes } from './psytypes';
 
