@@ -134,8 +134,7 @@ function* script(r: SberRequest) {
       yield rsp;
       continue;
     }
-    else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "SERVER_ACTION" &&
-      r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+    else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "SERVER_ACTION" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
       rsp.data = {type: 'mark'};
       rsp.msg = 'Спасибо за оценку';}
 
@@ -150,7 +149,10 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
-
+    else if (r.nlu.lemmaIntersection(['оценить'])) {
+      rsp.msg = 'Оценивание';
+      rsp.body.messageName = 'CALL_RATING';
+  }
     yield rsp;
   }
 
