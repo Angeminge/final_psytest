@@ -1,4 +1,5 @@
 import { Dialute, SberRequest } from 'dialute';
+import { stat } from 'fs';
 import { data } from './data';
 import { psytypes } from './psytypes';
 
@@ -25,6 +26,8 @@ function* script(r: SberRequest) {
   };
 
   function updateState(ans: any) {
+    rsp.kbrd = ['Оценить'];  
+
     if (!(questions[state.id].options[ans].koe === undefined)) {
       state.e += Number(questions[state.id].options[ans].koe.e === undefined? '0' : questions[state.id].options[ans].koe.e);
       state.l += Number(questions[state.id].options[ans].koe.l === undefined? '0' : questions[state.id].options[ans].koe.l);
@@ -107,6 +110,8 @@ function* script(r: SberRequest) {
   }
 
   function checkArray(r: any, arr: any) {
+    rsp.kbrd = ['Оценить'];  
+
     return r.nlu.lemmaIntersection(arr) || arr.includes(r.msg.toLowerCase());
   }
 
@@ -147,7 +152,7 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
-    else if (checkArray(r, ['оценить'])) {
+    else if (checkArray(r,['оценить'])) {
       rsp.msg = 'Оценивание';
       rsp.body.messageName = 'CALL_RATING';
   }
