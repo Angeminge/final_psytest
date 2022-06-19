@@ -25,7 +25,6 @@ function* script(r: SberRequest) {
   };
 
   function updateState(ans: any) {
-    rsp.kbrd = ['Оценить'];  
 
     if (!(questions[state.id].options[ans].koe === undefined)) {
       state.e += Number(questions[state.id].options[ans].koe.e === undefined? '0' : questions[state.id].options[ans].koe.e);
@@ -109,7 +108,6 @@ function* script(r: SberRequest) {
   }
 
   function checkArray(r: any, arr: any) {
-    rsp.kbrd = ['Оценить'];  
 
     return r.nlu.lemmaIntersection(arr) || arr.includes(r.msg.toLowerCase());
   }
