@@ -126,8 +126,9 @@ function* script(r: SberRequest) {
         else {
           rsp.msg = 'Всего вам доброго!';
           rsp.msgJ = 'Еще увидимся. Пока!';
-          rsp.end = true;
           rsp.data = {'type': 'close_app'};
+          rsp.end = true;
+          
         }
       }
       yield rsp;
