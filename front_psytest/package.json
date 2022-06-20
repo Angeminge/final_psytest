@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@salutejs/client": "^1.2.1",
     "@sberdevices/assistant-client": "^5.0.2",
     "@sberdevices/plasma-icons": "^1.75.0",
     "@sberdevices/plasma-tokens": "^1.17.0",

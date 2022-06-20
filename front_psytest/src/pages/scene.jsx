@@ -4,7 +4,8 @@ import React from 'react';
 import {
   createSmartappDebugger,
   createAssistant,
-} from "@sberdevices/assistant-client";
+  createAssistantDev,
+} from "@salutejs/client";
 
 import { Button } from '@sberdevices/ui/components/Button/Button';
 import { Row, Col } from '@sberdevices/plasma-ui/components/Grid';
@@ -138,6 +139,10 @@ export class Scene extends React.Component {
     if (action.choice == 'Возможно') {
       this.handleClick(2);
     }
+
+    if (action.choice == 'Еще раз') {
+      this.handleClick(5);
+    }
   }
 
 
@@ -146,11 +151,14 @@ export class Scene extends React.Component {
     const { scene, backgroundImage } = this.state;
     console.log("SCENE ", scene);
     let size = 300;
-    if (document.documentElement.clientWidth>=1.5*document.documentElement.clientHeight){
+    if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
       size = document.documentElement.clientWidth*0.3;
+      console.log("size", size);
     }
     else{
       size = document.documentElement.clientWidth*0.9;
+      console.log("size", size);
+    }
     if (scene) {
       if (scene.intro) {
         return(
@@ -162,7 +170,7 @@ export class Scene extends React.Component {
                 scene.question.options.map((item) => {
                   return (
                     <Row>
-                      <Button scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) }>
+                      <Button scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={true}>
                       <div className='butTextWrapper'> {item.text[0]} </div>
                       </Button>
                     </Row>
@@ -182,6 +190,21 @@ export class Scene extends React.Component {
               <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
                 <h1 className='result-h'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
                 <p className='result-p'>{scene.type.description}</p>
+                {
+                    scene.question.options.map((item) => {
+                      return (
+                          <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover={true}
+                                    scaleOnPress={false}
+                                    style={{marginBottom: '12px', width: '100%'}}
+                                    stretch={true} size="s"
+                                    onClick={() => this.push({choice: item.text[0]})}>
+                              <div className='butTextWrapper'> {item.text[0]} </div>
+                            </Button>
+                          </Row>);
+                    })
+                  }
               </Col>
             </Row>
             </>
@@ -197,9 +220,8 @@ export class Scene extends React.Component {
                     scene.question.options.map((item) => {
                       return (
                           <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={item.id}
-                                    scaleOnInteraction={false}
-                                    scaleOnHover={false}
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover={true}
                                     scaleOnPress={false}
                                     style={{marginBottom: '12px', width: '100%'}}
                                     stretch={true} size="s"
@@ -211,11 +233,12 @@ export class Scene extends React.Component {
                   }
                 </Col>
                 <Col className="chart" type="rel">
-                  {PsyTestChart(scene.n, scene.e, 400)}
+                  {PsyTestChart(scene.n, scene.e, size)}
                 </Col>
               </Row>
           );
-        } else {
+        } 
+        else {
           return (
               <div className="incol" >
                 <div className="incol-content">
@@ -225,9 +248,8 @@ export class Scene extends React.Component {
                     scene.question.options.map((item) => {
                       return (
                           <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={item.id}
-                                    scaleOnInteraction = {false}
-                                    scaleOnHover = {false} scaleOnPress = {false}
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover = {true} scaleOnPress = {false}
                                     style={{ marginBottom: '12px', width: '100%' }}
                                     stretch={true} size="s"
                                     onClick={ () => this.push({choice: item.text[0]}) }>
@@ -238,7 +260,7 @@ export class Scene extends React.Component {
                   }
                 </div>
                 <div className="incol-chart">
-                  {PsyTestChart(scene.n, scene.e, 300)}
+                  {PsyTestChart(scene.n, scene.e, size)}
                 </div>
               </div>
           );
@@ -249,7 +271,6 @@ else {
       return (<Spinner className='spinnerWrapper'/>);
     }
   }
-}
 }
 
 export default Scene;
