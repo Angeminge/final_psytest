@@ -7,7 +7,7 @@ var flag = false;
 
 function* script(r: SberRequest) {
   const rsp = r.buildRsp();
-  rsp.kbrd = ['Оценить'];  
+  
   const state = {
     id: 0,
     e: 0,
@@ -77,7 +77,7 @@ function* script(r: SberRequest) {
 
     rsp.msg = 'Ваш тип: ' + psytypes[v].name + '. ' + psytypes[v].description;
     rsp.msgJ = 'Твой тип: ' + psytypes[v].name + '. ' + psytypes[v].description;
-
+    rsp.kbrd = ['Оценить'];  
     state.done = true;
     state.type = psytypes[v];
     state.question = {id: -2,
@@ -118,7 +118,6 @@ function* script(r: SberRequest) {
   yield rsp;
 
   while (state.id <= 56){
-    rsp.kbrd = ['Оценить'];
     if (r.type === 'SERVER_ACTION'){
       console.log(r.act?.action_id)
       if (r.act?.action_id == 'click'){
