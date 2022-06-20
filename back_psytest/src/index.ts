@@ -135,14 +135,7 @@ function* script(r: SberRequest) {
 
   while (state.id <= 56){
          
-    if (r.nlu.lemmaIntersection(['выход', 'выйти', 'выйди'])) {
-      rsp.msg = 'Всего вам доброго!';
-      rsp.msgJ = 'Еще увидимся. Пока!';
-      rsp.end = true;
-      rsp.data = {'type': 'close_app'};
-    }
-
-    else if (checkArray(r, ['да', 'согласен', 'да да'])) {updateState(0);}
+    if (checkArray(r, ['да', 'согласен', 'да да'])) {updateState(0);}
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
