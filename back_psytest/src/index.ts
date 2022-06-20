@@ -115,33 +115,27 @@ function* script(r: SberRequest) {
   startState();
   rsp.msg = questions[0].texts;
   rsp.msgJ = questions[0].textj;
+
   yield rsp;
+  
+  if (r.type === 'SERVER_ACTION'){
+    console.log(r.act?.action_id)
+    if (r.act?.action_id == 'click'){
+      console.log(r.act.data);
+      if (r.act.data != 10) updateState(r.act.data);
+      else {
+        rsp.msg = 'Всего вам доброго!';
+        rsp.msgJ = 'Еще увидимся. Пока!';
+        rsp.end = true;
+        rsp.data = {'type': 'close_app'};
+      }
+    }
+    yield rsp;
+  }
 
   while (state.id <= 56){
-    if (r.type === 'SERVER_ACTION'){
-      console.log(r.act?.action_id)
-      if (r.act?.action_id == 'click'){
-        console.log(r.act.data);
-        if (r.act.data != 10) updateState(r.act.data);
-        else {
-          rsp.msg = 'Всего вам доброго!';
-          rsp.msgJ = 'Еще увидимся. Пока!';
-          rsp.end = true;
-          rsp.data = {'type': 'close_app'};
-        }
-      }
-      yield rsp;
-      continue;
-    }
-    else if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
-      rsp.data = {type: 'mark'};
-      rsp.msg = 'Спасибо за оценку';
-      flag = true;
-      yield rsp;
-      continue;
-    }
-
-    else if (r.nlu.lemmaIntersection(['выход', 'выйти', 'выйди'])) {
+         
+    if (r.nlu.lemmaIntersection(['выход', 'выйти', 'выйди'])) {
       rsp.msg = 'Всего вам доброго!';
       rsp.msgJ = 'Еще увидимся. Пока!';
       rsp.end = true;
@@ -156,7 +150,16 @@ function* script(r: SberRequest) {
       rsp.msg = 'Оценивание';
       rsp.body.messageName = 'CALL_RATING';
   }
+
     yield rsp;
+  }
+
+  if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+    rsp.data = {type: 'mark'};
+    rsp.msg = 'Спасибо за оценку';
+    flag = true;
+    yield rsp;
+    
   }
 
   getPsytype();
