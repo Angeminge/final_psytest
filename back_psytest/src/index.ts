@@ -117,7 +117,7 @@ function* script(r: SberRequest) {
   rsp.msgJ = questions[0].textj;
 
   yield rsp;
-  
+
   if (r.type === 'SERVER_ACTION'){
     console.log(r.act?.action_id)
     if (r.act?.action_id == 'click'){
@@ -127,7 +127,7 @@ function* script(r: SberRequest) {
         rsp.msg = 'Всего вам доброго!';
         rsp.msgJ = 'Еще увидимся. Пока!';
         rsp.end = true;
-        rsp.data = {'type': 'close_app'};
+        rsp.data = {type: 'close'};
       }
     }
     yield rsp;
