@@ -84,9 +84,8 @@ export class Scene extends React.Component {
 
       if (data.type == 'smart_app_data') {
         this.state = data.smart_app_data;
+        this.setState({scene: this.state});
       }
-
-      this.setState({scene: this.state});
     });
   }
 
