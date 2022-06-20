@@ -7,6 +7,7 @@ var flag = false;
 
 function* script(r: SberRequest) {
   const rsp = r.buildRsp();
+  rsp.kbrd = ['Оценить'];
   
   const state = {
     id: 0,
@@ -109,19 +110,20 @@ function* script(r: SberRequest) {
   yield rsp;
 
   while (state.id <= 56){
-    if (r.type === 'SERVER_ACTION'){
+    
+    if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+      rsp.data = {type: 'mark'};
+      rsp.msg = 'Спасибо за оценку';
+      flag = true;
+      yield rsp;
+      continue;
+    }
+    else if (r.type === 'SERVER_ACTION'){
       console.log(r.act?.action_id)
       if (r.act?.action_id == 'click'){
         console.log(r.act.data);
         updateState(r.act.data);        
       }
-      yield rsp;
-      continue;
-    }
-    else if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
-      rsp.data = {type: 'mark'};
-      rsp.msg = 'Спасибо за оценку';
-      flag = true;
       yield rsp;
       continue;
     }
@@ -137,12 +139,15 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
-    else if (!flag && checkArray(r,['оценить'])) {
+    if (!flag && checkArray(r,['оценить'])) {
       rsp.msg = 'Оценивание';
       rsp.body.messageName = 'CALL_RATING';
+      yield rsp;
+      continue;
   }
     yield rsp;
   }
+  
 
   getPsytype();
   yield rsp;
