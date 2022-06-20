@@ -127,7 +127,7 @@ function* script(r: SberRequest) {
           rsp.msg = 'Всего вам доброго!';
           rsp.msgJ = 'Еще увидимся. Пока!';
           rsp.end = true;
-          rsp.data = {'type': 'close_app'}
+          rsp.data = {'type': 'close_app'};
         }
       }
       yield rsp;
@@ -145,7 +145,7 @@ function* script(r: SberRequest) {
       rsp.msg = 'Всего вам доброго!';
       rsp.msgJ = 'Еще увидимся. Пока!';
       rsp.end = true;
-      rsp.data = {'type': 'close_app'}
+      rsp.data = {'type': 'close_app'};
     }
 
     else if (checkArray(r, ['да', 'согласен', 'да да'])) {updateState(0);}
