@@ -76,8 +76,7 @@ function* script(r: SberRequest) {
     let v = calculateResult();
 
     rsp.msg = 'Ваш тип: ' + psytypes[v].name + '. ' + psytypes[v].description;
-    rsp.msgJ = 'Твой тип: ' + psytypes[v].name + '. ' + psytypes[v].description;
-    rsp.kbrd = ['Оценить'];  
+    rsp.msgJ = 'Твой тип: ' + psytypes[v].name + '. ' + psytypes[v].description; 
     state.done = true;
     state.type = psytypes[v];
     state.question = {id: -2,
@@ -88,14 +87,6 @@ function* script(r: SberRequest) {
       options: [
         {
           text: ['Еще раз'],
-          koe: {
-            e: 0,
-            n: 0,
-            l: 0
-          }
-        },
-        {
-          text: ['Выход'],
           koe: {
             e: 0,
             n: 0,
@@ -122,15 +113,7 @@ function* script(r: SberRequest) {
       console.log(r.act?.action_id)
       if (r.act?.action_id == 'click'){
         console.log(r.act.data);
-        if (r.act.data != 10) updateState(r.act.data);
-        else {
-          rsp.msg = 'Всего вам доброго!';
-          rsp.msgJ = 'Еще увидимся. Пока!';
-          rsp.data = {'type': 'close_app'};
-          rsp.end = true;
-          yield rsp;
-          break;          
-        }
+        updateState(r.act.data);        
       }
       yield rsp;
       continue;
@@ -147,7 +130,7 @@ function* script(r: SberRequest) {
       rsp.msg = 'Всего вам доброго!';
       rsp.msgJ = 'Еще увидимся. Пока!';
       rsp.end = true;
-      rsp.data = {'type': 'close_app'};
+      rsp.data = {type: 'close_app'};
     }
 
     else if (checkArray(r, ['да', 'согласен', 'да да'])) {updateState(0);}

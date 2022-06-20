@@ -12,14 +12,6 @@ export const data = [
                     n: 0,
                     l: 0
                 }
-            },
-            {
-                text: ['Выход'],
-                koe: {
-                    e: 0,
-                    n: 0,
-                    l: 0
-                }
             }
         ]
     },
