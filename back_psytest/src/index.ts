@@ -118,17 +118,8 @@ function* script(r: SberRequest) {
       }
       yield rsp;
       continue;
-    } 
-        
-    else if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
-      rsp.data = {type: 'mark'};
-      rsp.msg = 'Спасибо за оценку';
-      flag = true;
-      yield rsp;
-      continue;
     }
     
-
     else if (checkArray(r,['выход', 'выйти', 'выйди'])) {
       rsp.msg = 'Всего вам доброго!';
       rsp.msgJ = 'Еще увидимся. Пока!';
@@ -143,9 +134,17 @@ function* script(r: SberRequest) {
     else if (!flag && checkArray(r,['оценить'])) {
       rsp.msg = 'Оценивание';
       rsp.body.messageName = 'CALL_RATING';
+      flag = true;
       yield rsp;
       continue;
   }
+    else if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+      rsp.data = {type: 'mark'};
+      rsp.msg = 'Спасибо за оценку';      
+      yield rsp;
+      continue;
+  }
+
     yield rsp;
   }
   
