@@ -170,7 +170,7 @@ export class Scene extends React.Component {
                 scene.question.options.map((item) => {
                   return (
                     <Row>
-                      <Button scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={false}>
+                      <Button scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={true}>
                       <div className='butTextWrapper'> {item.text[0]} </div>
                       </Button>
                     </Row>
@@ -194,15 +194,12 @@ export class Scene extends React.Component {
                     scene.question.options.map((item) => {
                       return (
                           <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={item.id}
-                                    scaleOnInteraction={false}
-                                    scaleOnHover={false}
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover={true}
                                     scaleOnPress={false}
                                     style={{marginBottom: '12px', width: '100%'}}
                                     stretch={true} size="s"
-                                    onClick={() => this.push({choice: item.text[0]})}
-                                    focused={false}
-                                    outlined={false}>
+                                    onClick={() => this.push({choice: item.text[0]})}>
                               <div className='butTextWrapper'> {item.text[0]} </div>
                             </Button>
                           </Row>);
@@ -223,15 +220,12 @@ export class Scene extends React.Component {
                     scene.question.options.map((item) => {
                       return (
                           <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={item.id}
-                                    scaleOnInteraction={false}
-                                    scaleOnHover={false}
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover={true}
                                     scaleOnPress={false}
                                     style={{marginBottom: '12px', width: '100%'}}
                                     stretch={true} size="s"
-                                    onClick={() => this.push({choice: item.text[0]})}
-                                    focused={false}
-                                    outlined={false}>
+                                    onClick={() => this.push({choice: item.text[0]})}>
                               <div className='butTextWrapper'> {item.text[0]} </div>
                             </Button>
                           </Row>);
@@ -254,14 +248,11 @@ export class Scene extends React.Component {
                     scene.question.options.map((item) => {
                       return (
                           <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={item.id}
-                                    scaleOnInteraction = {false}
-                                    scaleOnHover = {false} scaleOnPress = {false}
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover = {true} scaleOnPress = {false}
                                     style={{ marginBottom: '12px', width: '100%' }}
                                     stretch={true} size="s"
-                                    onClick={ () => this.push({choice: item.text[0]}) }
-                                    focused={false}
-                                    outlined={false}>
+                                    onClick={ () => this.push({choice: item.text[0]}) }>
                               <div className='butTextWrapper'> {item.text[0]} </div>
                             </Button>
                           </Row>);
