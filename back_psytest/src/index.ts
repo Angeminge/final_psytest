@@ -201,7 +201,6 @@ function* script(r: SberRequest) {
           } else {
             rsp.msg = 'Поставьте навыку оценку';
             rsp.msg = 'Поставь навыку оценку';
-            rsp.body.type = 'raw';
             rsp.body.messageName = 'CALL_RATING';
           }
           yield rsp;
