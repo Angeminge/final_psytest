@@ -167,12 +167,6 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
-  // else if (!flag && checkArray(r,['оценить'])) {
-  //     rsp.msg = 'Оценивание';
-  //     rsp.body.type = 'raw';
-  //     rsp.body.messageName = 'CALL_RATING';
-  //     flag = true;
-  // }
     yield rsp;
   }
 
@@ -205,11 +199,7 @@ function* script(r: SberRequest) {
       }
     }
 
-    if (!flag) {
-      getPsytype();
-    } else {
-      getPsytypeWithoutVoice();
-    }
+    getPsytype();
     yield rsp;
   }
 }

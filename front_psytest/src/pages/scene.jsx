@@ -185,6 +185,7 @@ export class Scene extends React.Component {
             </>
         );
       } else if (scene.done) {
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
         return(
           <>
             <Row className='rowWrapper'>
@@ -212,9 +213,36 @@ export class Scene extends React.Component {
               </Col>
             </Row>
             </>
-        );
+        ); 
       } else {
-        if (document.documentElement.clientWidth>=1.3*document.documentElement.clientHeight){
+        return(
+          <>
+            <Row className='rowWrapper'>
+              <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
+                <h1 className='result-h'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
+                <p className='result-p'>{scene.type.description}</p>
+                {
+                    scene.question.options.map((item) => {
+                      return (
+                          <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover={true}
+                                    scaleOnPress={false}
+                                    style={{marginBottom: '12px', width: '100%'}}
+                                    stretch={true} size="s"
+                                    onClick={() => this.push({choice: item.text[0]})}>
+                              <div className='butTextWrapper'> {item.text[0]} </div>
+                            </Button>
+                          </Row>);
+                    })
+                  }
+              </Col>
+            </Row>
+            </>
+        ); 
+      }
+      } else {
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
           return (
               <Row className="inline">
                 <Col className="inline-content" type="rel">
@@ -237,7 +265,7 @@ export class Scene extends React.Component {
                   }
                 </Col>
                 <Col className="chart" type="rel">
-                  {PsyTestChart(scene.n, scene.e, size)}
+                  {PsyTestChart(scene.n, scene.e, size*0.9)}
                 </Col>
               </Row>
           );
