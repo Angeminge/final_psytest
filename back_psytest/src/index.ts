@@ -190,7 +190,7 @@ function* script(r: SberRequest) {
             rsp = r.buildRsp();
             rsp.msg = 'До свидания!';
             rsp.msg = 'Пока!';
-            rsp.body.messageName = ' ANSWER_TO_USER';
+            rsp.body.messageName = 'ANSWER_TO_USER';
             rsp.body.payload.items.push({"command": {"type": "close_app"}});
             yield rsp;
           } else {
