@@ -6,7 +6,7 @@ const questions = data;
 var flag = false;
 
 function* script(r: SberRequest) {
-  const rsp = r.buildRsp();
+  var rsp = r.buildRsp();
 
   const state: any = {
     id: 0,
@@ -114,7 +114,7 @@ function* script(r: SberRequest) {
 
     state.done = true;
     state.type = psytypes[v];
-    state.question = {id: -2,
+    state.question = {id: -3,
       texts: 'Ваш тип: ' + psytypes[v].name + '. ' + psytypes[v].description,
       texta: 'Ваш тип: ' + psytypes[v].name + '. ' + psytypes[v].description,
       textj: 'Твой тип: ' + psytypes[v].name + '. ' + psytypes[v].description,
@@ -130,17 +130,6 @@ function* script(r: SberRequest) {
         }
       ]
     };
-
-    if (!flag) {
-      state.question.options.push({
-        text: ['Оценить смартап'],
-        koe: {
-          e: 0,
-          n: 0,
-          l: 0
-        }
-      });
-    }
 
     rsp.data = state;
   }
@@ -202,16 +191,17 @@ function* script(r: SberRequest) {
             rsp.msg = 'Поставьте навыку оценку';
             rsp.msg = 'Поставь навыку оценку';
             rsp.body.messageName = 'CALL_RATING';
+            flag = true;
           }
           yield rsp;
+          rsp = r.buildRsp();
           continue;
         }
         yield rsp;
         continue;
       } else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
         rsp.data = {type: 'mark'};
-        rsp.msg = 'Спасибо за оценку ывывывы';      
-        flag = true;
+        rsp.msg = 'Спасибо за оценку!';      
       }
     }
 
