@@ -6,12 +6,12 @@ import {
   createAssistant,
   createAssistantDev,
 } from "@salutejs/client";
+import {detectDevice} from "@sberdevices/ui/utils";
 
 import { Button } from '@sberdevices/ui/components/Button/Button';
 import { Row, Col } from '@sberdevices/plasma-ui/components/Grid';
 import { Spinner } from '@sberdevices/plasma-ui/components/Spinner'
 
-import Indicators from '../components/indicator'
 import './scene.css';
 import '../components/Chart.jsx';
 import '../components/centerButtons.css'
@@ -22,8 +22,10 @@ import '../components/startText.css'
 import '../components/buttonText.css'
 import '../components/lastBut.css'
 import '../components/centerSpinner.css'
-import { PsyTestChart } from '../components/Chart.jsx';
+import PsyTestChart from '../components/Chart.jsx';
 import ProgressBar from "../components/ProgressBar";
+import {Container} from "@sberdevices/ui";
+import {IconArrowLeft} from "@sberdevices/plasma-icons";
 
 
 var characterID = '';
@@ -140,6 +142,10 @@ export class Scene extends React.Component {
       this.handleClick(2);
     }
 
+    if (action.choice == 'Назад') {
+      this.handleClick(3);
+    }
+
     if (action.choice == 'Еще раз') {
       this.handleClick(5);
     }
@@ -154,6 +160,7 @@ export class Scene extends React.Component {
     
     const { scene, backgroundImage } = this.state;
     console.log("SCENE ", scene);
+    const deviceKind = detectDevice();
     let size = 300;
     if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
       size = document.documentElement.clientWidth*0.3;
@@ -185,7 +192,7 @@ export class Scene extends React.Component {
             </>
         );
       } else if (scene.done) {
-        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight || deviceKind==="SberBox" || deviceKind==="SberPortal"){
         return(
           <>
             <Row className='rowWrapper'>
@@ -242,60 +249,81 @@ export class Scene extends React.Component {
         ); 
       }
       } else {
-        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight || deviceKind.toLowerCase()==="sberbox" || deviceKind==="SberPortal"){
           return (
-              <Row className="inline">
-                <Col className="inline-content" type="rel">
-                  <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
-                  <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
-                  {
-                    scene.question.options.map((item) => {
-                      return (
-                          <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={scene.id+'.'+item.id}
-                                    scaleOnHover={true}
-                                    scaleOnPress={false}
-                                    style={{marginBottom: '12px', width: '100%'}}
-                                    stretch={true} size="s"
-                                    onClick={() => this.push({choice: item.text[0]})}>
-                              <div className='butTextWrapper'> {item.text[0]} </div>
-                            </Button>
-                          </Row>);
-                    })
-                  }
-                </Col>
-                <Col className="chart" type="rel">
-                  {PsyTestChart(scene.n, scene.e, size*0.9)}
-                </Col>
-              </Row>
+              <Container className="container">
+                <Row>
+                  <Col sizeS={2} sizeM={3} sizeL={4} sizeXL={6}>
+                    <div className="filler">
+                      <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
+                      <h1> {scene.question.texts} </h1>
+                      {scene.question.options.map((item) => {
+                        return(
+                            <Row sizeS={4} sizeM={6} sizeL={6} sizeXL={6} >
+                              <Button key={scene.id + '.' + item.id}
+                                      scaleOnHover={true}
+                                      scaleOnPress={false}
+                                      style={{marginBottom: '20px', width: '100%'}}
+                                  //size="s"
+                                      stretch={true}
+                                      onClick={() => this.push({choice: item.text[0]})}
+                                      outline={true}
+                                      text={item.text[0]}
+                              />
+                            </Row>);
+                      })
+                      }
+                      <Button contentLeft={<IconArrowLeft/>}
+                              onClick={() => this.push({choice: ['Назад']})}/>
+                    </div>
+                  </Col>
+                  <Col sizeS={2} sizeM={3} sizeL={4} sizeXL={6}>
+                    <div className="chart-container-desktop">
+                      <PsyTestChart n={scene.n} e={scene.e} size={size} />
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
           );
+
         } 
         else {
           return (
-              <div className="incol" >
-                <div className="incol-content">
-                  <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
-                  <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts  } </h1>
-                  {
-                    scene.question.options.map((item) => {
-                      return (
-                          <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={scene.id+'.'+item.id}
-                                    scaleOnHover = {true} scaleOnPress = {false}
-                                    style={{ marginBottom: '12px', width: '100%' }}
-                                    stretch={true} size="s"
-                                    onClick={ () => this.push({choice: item.text[0]}) }>
-                              <div className='butTextWrapper'> {item.text[0]} </div>
-                            </Button>
+              <Container className="container">
+                <Row sizeS={4} sizeM={6} sizeL={8} sizeXL={12}>
+
+                  <div className="filler">
+                    <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
+                    <h1> {scene.question.texts} </h1>
+                    {scene.question.options.map((item) => {
+                      return(
+                          <Row sizeS={4} sizeM={6} sizeL={6} sizeXL={6} >
+                            <Button key={scene.id + '.' + item.id}
+                                    scaleOnHover={true}
+                                    scaleOnPress={false}
+                                    style={{marginBottom: '20px', width: '100%'}}
+                                //size="s"
+                                    stretch={true}
+                                    onClick={() => this.push({choice: item.text[0]})}
+                                    outline={true}
+                                    text={item.text[0]}
+                            />
                           </Row>);
                     })
-                  }
-                </div>
-                <div className="incol-chart">
-                  {PsyTestChart(scene.n, scene.e, size)}
-                </div>
-              </div>
+                    }
+                    <Button contentLeft={<IconArrowLeft/>}
+                            onClick={() => this.push({choice: ['Назад']})}/>
+                  </div>
+
+                  <Row sizeS={4} sizeM={6} sizeL={8} sizeXL={12}>
+                    <div className="chart-container-mobile">
+                      <PsyTestChart n={scene.n} e={scene.e} size={size} />
+                    </div>
+                  </Row>
+                </Row>
+              </Container>
           );
+
         }
       } 
 }

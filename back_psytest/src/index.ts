@@ -1,9 +1,13 @@
+// import { channel } from 'diagnostics_channel';
 import { Dialute, SberRequest } from 'dialute';
 import { data } from './data';
 import { psytypes } from './psytypes';
 
 const questions = data;
 var flag = false;
+var array_e  = Array(57).fill(0);
+var array_l  = Array(57).fill(0);
+var array_n  = Array(57).fill(0);
 
 function* script(r: SberRequest) {
   var rsp = r.buildRsp();
@@ -24,18 +28,37 @@ function* script(r: SberRequest) {
     done: false
   };
 
-  function updateState(ans: any) {
-
-    if (!(questions[state.id].options[ans].koe === undefined)) {
-      state.e += Number(questions[state.id].options[ans].koe.e === undefined? '0' : questions[state.id].options[ans].koe.e);
-      state.l += Number(questions[state.id].options[ans].koe.l === undefined? '0' : questions[state.id].options[ans].koe.l);
-      state.n += Number(questions[state.id].options[ans].koe.n === undefined? '0' : questions[state.id].options[ans].koe.n);
+  function updateState(ans: any, back=false,first_q=false) {
+    if(first_q){
+      state.id = 1;
+      state.e = 0;
+      state.l = 0;
+      state.n = 0;
+      array_e  = Array(57).fill(0);
+      array_l  = Array(57).fill(0);
+      array_n  = Array(57).fill(0);
+    }
+    else if (back){
+      state.id -= 1
+      array_e[state.id] = 0;
+      array_l[state.id] = 0;
+      array_n[state.id] = 0;
 
     }
 
+    else if (!(questions[state.id].options[ans].koe === undefined)) {      
+      array_e[state.id] = Number(questions[state.id].options[ans].koe.e === undefined? '0' : questions[state.id].options[ans].koe.e);
+      array_l[state.id] = Number(questions[state.id].options[ans].koe.l === undefined? '0' : questions[state.id].options[ans].koe.l);
+      array_n[state.id] = Number(questions[state.id].options[ans].koe.n === undefined? '0' : questions[state.id].options[ans].koe.n);
+      state.id += 1;
+    }
+
+    state.e = array_e.reduce(function(acc, val) { return acc + val; }, 0);
+    state.l = array_l.reduce(function(acc, val) { return acc + val; }, 0);
+    state.n = array_n.reduce(function(acc, val) { return acc + val; }, 0);
     state.intro = false;
     state.done = false;
-    state.id += 1;
+    
     state.question = questions[state.id]
 
     rsp.msg = questions[state.id].texts;
@@ -162,7 +185,8 @@ function* script(r: SberRequest) {
       rsp.end = true;
       rsp.data = {type: 'close_app'};
     }
-
+    else if (checkArray(r, ['начало'])){updateState(0, false,true)}
+    else if (checkArray(r, ['назад'])){updateState(0, true)}
     else if (checkArray(r, ['да', 'согласен', 'да да'])) {updateState(0);}
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}

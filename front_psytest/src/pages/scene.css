@@ -1,3 +1,40 @@
+.filler{
+    margin-top: 10%;
+    box-sizing : border-box;
+    display: block;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    padding: 0.5rem 1rem 1rem;
+}
+
+.chart-container-desktop{
+    margin-top: 10%;
+    box-sizing : border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem 1rem 1rem;
+}
+
+.chart-container-mobile{
+    margin-top: 10%;
+    margin-right: 10%;
+    box-sizing : border-box;
+    display: block;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 1rem 1rem;
+    offset-position: center;
+}
+
+
+
+
+
+
 .inline{
     display: inline;
     padding-left: 9%;
