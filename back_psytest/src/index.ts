@@ -7,9 +7,8 @@ var flag = false;
 
 function* script(r: SberRequest) {
   const rsp = r.buildRsp();
-  rsp.kbrd = ['Оценить'];
-  
-  const state = {
+
+  const state: any = {
     id: 0,
     e: 0,
     l: 0,
@@ -95,7 +94,54 @@ function* script(r: SberRequest) {
           }
         }
       ]
+    };
+
+    if (!flag) {
+      state.question.options.push({
+        text: ['Оценить смартап'],
+        koe: {
+          e: 0,
+          n: 0,
+          l: 0
+        }
+      });
     }
+    rsp.data = state;
+  }
+
+  function getPsytypeWithoutVoice() {
+    let v = calculateResult();
+
+    state.done = true;
+    state.type = psytypes[v];
+    state.question = {id: -2,
+      texts: 'Ваш тип: ' + psytypes[v].name + '. ' + psytypes[v].description,
+      texta: 'Ваш тип: ' + psytypes[v].name + '. ' + psytypes[v].description,
+      textj: 'Твой тип: ' + psytypes[v].name + '. ' + psytypes[v].description,
+
+      options: [
+        {
+          text: ['Еще раз'],
+          koe: {
+            e: 0,
+            n: 0,
+            l: 0
+          }
+        }
+      ]
+    };
+
+    if (!flag) {
+      state.question.options.push({
+        text: ['Оценить смартап'],
+        koe: {
+          e: 0,
+          n: 0,
+          l: 0
+        }
+      });
+    }
+
     rsp.data = state;
   }
 
@@ -110,10 +156,11 @@ function* script(r: SberRequest) {
   yield rsp;
 
   while (state.id <= 56){
+    console.log('current', state.id);
     if (r.type === 'SERVER_ACTION'){
       console.log(r.act?.action_id)
       if (r.act?.action_id == 'click'){
-        console.log(r.act.data);
+        console.log(typeof r.act.data, r.act.data);
         updateState(r.act.data);        
       }
       yield rsp;
@@ -131,26 +178,51 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
-    else if (!flag && checkArray(r,['оценить'])) {
-      rsp.msg = 'Оценивание';
-      rsp.body.messageName = 'CALL_RATING';
-      flag = true;
-      yield rsp;
-      continue;
-  }
-    else if (!flag && r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
-      rsp.data = {type: 'mark'};
-      rsp.msg = 'Спасибо за оценку';      
-      yield rsp;
-      continue;
-  }
-
+  // else if (!flag && checkArray(r,['оценить'])) {
+  //     rsp.msg = 'Оценивание';
+  //     rsp.body.type = 'raw';
+  //     rsp.body.messageName = 'CALL_RATING';
+  //     flag = true;
+  // }
     yield rsp;
   }
-  
 
   getPsytype();
   yield rsp;
+  
+  while (true) {
+    if (!flag) {
+      if (r.type === 'SERVER_ACTION') {
+        console.log(r.act?.action_id)
+        if (r.act?.action_id == 'click'){
+          console.log(r.act.data);
+          if (r.act.data == 5) {
+            break; 
+          } else {
+            rsp.msg = 'Поставьте навыку оценку';
+            rsp.msg = 'Поставь навыку оценку';
+            rsp.body.type = 'raw';
+            rsp.body.messageName = 'CALL_RATING';
+          }
+          yield rsp;
+          continue;
+        }
+        yield rsp;
+        continue;
+      } else if (r.type !== "MESSAGE_TO_SKILL" && r.type !== "RUN_APP" && r.type !== "CLOSE_APP") {
+        rsp.data = {type: 'mark'};
+        rsp.msg = 'Спасибо за оценку ывывывы';      
+        flag = true;
+      }
+    }
+
+    if (!flag) {
+      getPsytype();
+    } else {
+      getPsytypeWithoutVoice();
+    }
+    yield rsp;
+  }
 }
 
 

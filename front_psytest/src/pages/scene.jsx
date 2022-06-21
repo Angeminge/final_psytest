@@ -143,6 +143,10 @@ export class Scene extends React.Component {
     if (action.choice == 'Еще раз') {
       this.handleClick(5);
     }
+
+    if (action.choice == 'Оценить смартап') {
+      this.handleClick(7);
+    }
   }
 
 
