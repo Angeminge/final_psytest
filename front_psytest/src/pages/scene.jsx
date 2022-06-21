@@ -6,6 +6,7 @@ import {
   createAssistant,
   createAssistantDev,
 } from "@salutejs/client";
+import {detectDevice} from "@sberdevices/ui/utils";
 
 import { Button } from '@sberdevices/ui/components/Button/Button';
 import { Row, Col } from '@sberdevices/plasma-ui/components/Grid';
@@ -154,6 +155,7 @@ export class Scene extends React.Component {
     
     const { scene, backgroundImage } = this.state;
     console.log("SCENE ", scene);
+    const deviceKind = detectDevice();
     let size = 300;
     if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
       size = document.documentElement.clientWidth*0.3;
@@ -185,7 +187,7 @@ export class Scene extends React.Component {
             </>
         );
       } else if (scene.done) {
-        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight || deviceKind==="SberBox" || deviceKind==="SberPortal"){
         return(
           <>
             <Row className='rowWrapper'>
@@ -242,7 +244,7 @@ export class Scene extends React.Component {
         ); 
       }
       } else {
-        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight || deviceKind==="SberBox" || deviceKind==="SberPortal"){
           return (
               <Row className="inline">
                 <Col className="inline-content" type="rel">
