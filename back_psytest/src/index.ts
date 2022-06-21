@@ -93,14 +93,6 @@ function* script(r: SberRequest) {
             l: 0
           }
         },
-        {
-          text: ['Выход'],
-          koe: {
-            e: 0,
-            n: 0,
-            l: 0
-          }
-        }
       ]
     };
 
@@ -179,20 +171,15 @@ function* script(r: SberRequest) {
   }
   
   while (true) {
+
     if (!flag) {
+      getPsytype();
       if (r.type === 'SERVER_ACTION') {
         console.log(r.act?.action_id)
         if (r.act?.action_id == 'click'){
           console.log(r.act.data);
           if (r.act.data == 5) {
             break; 
-          } else if (r.act.data == 10) {
-            rsp = r.buildRsp();
-            rsp.msg = 'До свидания!';
-            rsp.msg = 'Пока!';
-            rsp.body.messageName = 'ANSWER_TO_USER';
-            rsp.body.payload.items.push({"command": {"type": "close_app"}});
-            yield rsp;
           } else {
             rsp.msg = 'Поставьте навыку оценку';
             rsp.msg = 'Поставь навыку оценку';
@@ -209,9 +196,23 @@ function* script(r: SberRequest) {
         rsp.data = {type: 'mark'};
         rsp.msg = 'Спасибо за оценку!';      
       }
+      else if (checkArray(r, ['оценить', 'поставить оценку'])) {
+        rsp.msg = 'Поставьте навыку оценку';
+        rsp.msgJ = 'Поставь навыку оценку';
+        rsp.body.messageName = 'CALL_RATING';
+        flag = true;
+      }
+      else if (checkArray(r, ['еще раз', 'повторить'])) {break;}
+    } else {
+      getPsytypeWithoutVoice();
+      if (r.type === 'SERVER_ACTION') {
+        console.log(r.act?.action_id)
+        if (r.act?.action_id == 'click'){
+          console.log(r.act.data);
+          break;
+        }
+      } else if (checkArray(r, ['еще раз', 'повторить'])) {break;}
     }
-
-    getPsytype();
     yield rsp;
   }
 }
