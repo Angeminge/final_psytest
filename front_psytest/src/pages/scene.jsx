@@ -12,7 +12,6 @@ import { Button } from '@sberdevices/ui/components/Button/Button';
 import { Row, Col } from '@sberdevices/plasma-ui/components/Grid';
 import { Spinner } from '@sberdevices/plasma-ui/components/Spinner'
 
-import Indicators from '../components/indicator'
 import './scene.css';
 import '../components/Chart.jsx';
 import '../components/centerButtons.css'
@@ -23,7 +22,7 @@ import '../components/startText.css'
 import '../components/buttonText.css'
 import '../components/lastBut.css'
 import '../components/centerSpinner.css'
-import { PsyTestChart } from '../components/Chart.jsx';
+import PsyTestChart from '../components/Chart.jsx';
 import ProgressBar from "../components/ProgressBar";
 import {Container} from "@sberdevices/ui";
 import {IconArrowLeft} from "@sberdevices/plasma-icons";
@@ -274,7 +273,7 @@ export class Scene extends React.Component {
                             </Row>);
                       })
                       }
-                      <Button contentLeft={<IconArrowLeft/>} style={{marginTop:'20%'}}
+                      <Button contentLeft={<IconArrowLeft/>}
                               onClick={() => this.push({choice: ['Назад']})}/>
                     </div>
                   </Col>
@@ -312,7 +311,7 @@ export class Scene extends React.Component {
                           </Row>);
                     })
                     }
-                    <Button contentLeft={<IconArrowLeft/>} style={{marginTop:'20%'}}
+                    <Button contentLeft={<IconArrowLeft/>}
                             onClick={() => this.push({choice: ['Назад']})}/>
                   </div>
 
