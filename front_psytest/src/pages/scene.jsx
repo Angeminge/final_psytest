@@ -6,7 +6,6 @@ import {
   createAssistant,
   createAssistantDev,
 } from "@salutejs/client";
-import {detectDevice} from "@sberdevices/ui/utils";
 
 import { Button } from '@sberdevices/ui/components/Button/Button';
 import { Row, Col } from '@sberdevices/plasma-ui/components/Grid';
@@ -155,8 +154,15 @@ export class Scene extends React.Component {
     
     const { scene, backgroundImage } = this.state;
     console.log("SCENE ", scene);
-    const deviceKind = detectDevice();
     let size = 300;
+    if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
+      size = document.documentElement.clientWidth*0.3;
+      console.log("size", size);
+    }
+    else{
+      size = document.documentElement.clientWidth*0.9;
+      console.log("size", size);
+    }
     if (scene) {
       if (scene.intro) {
         return(
@@ -179,7 +185,7 @@ export class Scene extends React.Component {
             </>
         );
       } else if (scene.done) {
-        if (document.documentElement.clientWidth>=document.documentElement.clientHeight || deviceKind==="SberBox" || deviceKind==="SberPortal"){
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
         return(
           <>
             <Row className='rowWrapper'>
@@ -236,8 +242,7 @@ export class Scene extends React.Component {
         ); 
       }
       } else {
-        if (document.documentElement.clientWidth>=document.documentElement.clientHeight || deviceKind==="SberBox" || deviceKind==="SberPortal"){
-          size = document.documentElement.clientWidth*0.3;
+        if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
           return (
               <Row className="inline">
                 <Col className="inline-content" type="rel">
@@ -266,7 +271,6 @@ export class Scene extends React.Component {
           );
         } 
         else {
-          size = document.documentElement.clientWidth*0.3;
           return (
               <div className="incol" >
                 <div className="incol-content">
