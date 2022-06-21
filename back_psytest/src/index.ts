@@ -93,14 +93,6 @@ function* script(r: SberRequest) {
             l: 0
           }
         },
-        {
-          text: ['Выход'],
-          koe: {
-            e: 0,
-            n: 0,
-            l: 0
-          }
-        }
       ]
     };
 
@@ -178,6 +170,9 @@ function* script(r: SberRequest) {
     yield rsp;
   }
   
+  getPsytype();
+  yield rsp;
+
   while (true) {
     if (r.type === 'SERVER_ACTION') {
       console.log(r.act?.action_id)

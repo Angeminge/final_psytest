@@ -174,7 +174,7 @@ export class Scene extends React.Component {
                 scene.question.options.map((item) => {
                   return (
                     <Row>
-                      <Button scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={true}>
+                      <Button key={'-1.'+item.id} scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={true}>
                       <div className='butTextWrapper'> {item.text[0]} </div>
                       </Button>
                     </Row>
