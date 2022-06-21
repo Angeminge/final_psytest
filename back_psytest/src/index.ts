@@ -92,6 +92,14 @@ function* script(r: SberRequest) {
             n: 0,
             l: 0
           }
+        },
+        {
+          text: ['Выход'],
+          koe: {
+            e: 0,
+            n: 0,
+            l: 0
+          }
         }
       ]
     };
@@ -169,9 +177,6 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
     yield rsp;
   }
-
-  getPsytype();
-  yield rsp;
   
   while (true) {
     if (!flag) {
@@ -181,6 +186,13 @@ function* script(r: SberRequest) {
           console.log(r.act.data);
           if (r.act.data == 5) {
             break; 
+          } else if (r.act.data == 10) {
+            rsp = r.buildRsp();
+            rsp.msg = 'До свидания!';
+            rsp.msg = 'Пока!';
+            rsp.body.messageName = ' ANSWER_TO_USER';
+            rsp.body.payload.items.push({"command": {"type": "close_app"}});
+            yield rsp;
           } else {
             rsp.msg = 'Поставьте навыку оценку';
             rsp.msg = 'Поставь навыку оценку';
