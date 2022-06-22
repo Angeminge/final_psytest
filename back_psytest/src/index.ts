@@ -176,6 +176,7 @@ function* script(r: SberRequest) {
   yield rsp;
 
   while (state.id <= 56){
+    rsp = r.buildRsp();
     console.log('current id', state.id);
     if (r.msg) {
       console.log(r.msg.toLowerCase());
@@ -190,9 +191,19 @@ function* script(r: SberRequest) {
     else if (checkArray(r, ['да', 'согласен', 'да да'])) {updateState(0);}
     else if (checkArray(r, ['нет', 'не согласен', 'сомневаюсь'])) {updateState(1);}
     else if (checkArray(r, ['возможно', 'не знаю'])) {updateState(2);}
-    else if (checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
+    else if (state.id == 0 && checkArray(r, ['начать', 'старт', 'начинай'])) {updateState(0);}
     else if (state.id > 1 && checkArray(r, ['шаг назад'])) {revertState();}
-    else if (state.id > 1 && checkArray(r, ['перезапустить тест', 'перезапусти тест'])) {console.log('restart');restart()}
+    else if (checkArray(r, ['перезапустить тест', 'перезапусти тест'])) {console.log('restart');restart()}
+    else if (state.id == 1 && checkArray(r, ['шаг назад'])) {
+      rsp.msg = 'Это первый вопрос';
+      rsp.msgJ = 'Это первый вопрос';
+    }
+    else if (state.id > 0 && checkArray(r, ['помощь', 'помоги', 'справка'])) {
+      rsp.msg = 'Скажите или выберите «Да», «Нет», «Не знаю» для ответа на вопрос. Чтобы вернуться к предыдущему вопросу, скажите «Шаг назад», чтобы начать сначала, скажите «Перезапусти тест';
+      rsp.msgJ = 'Скажи или выбери «Да», «Нет», «Не знаю» для ответа на вопрос. Чтобы вернуться к предыдущему вопросу, скажи «Шаг назад», чтобы начать сначала, скажи «Перезапусти тест';
+    }
+
+
     if (state.id > 1) {
       rsp.kbrd = ['Шаг назад', 'Перезапустить тест'];
     } else {
@@ -235,6 +246,10 @@ function* script(r: SberRequest) {
       rsp.body.messageName = 'CALL_RATING';
       flag = true;
     } else if (checkArray(r, ['заново', 'еще раз'])) {break;}
+    else if (checkArray(r, ['помощь', 'помоги', 'справка'])) {
+      rsp.msg = 'Скажите или выберите «Еще раз» для того чтобы повторить тест, скажите «Выход» чтобы выйти';
+      rsp.msgJ = 'Скажи или выбери «Еще раз» для того чтобы повторить тест, скажи «Выход» чтобы выйти';
+    }
 
     getPsytype();
     yield rsp;
