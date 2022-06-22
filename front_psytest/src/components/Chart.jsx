@@ -8,14 +8,15 @@ import {
     CartesianGrid,
     Tooltip,
     Dot,
-    Scatter
+    Scatter,
+    ResponsiveContainer
 } from "recharts";
 
 
 export const PsyTestChart = (n, e, size) => {
     const data = [{ neuroticism: n, extravertism: e }];
     return (
-        <Container aria-setsize={size} padding-left='inherit'>
+        <ResponsiveContainer height={size} width={size}>
         <ScatterChart
             width={size*0.8}
             height={size*0.8}
@@ -55,6 +56,6 @@ export const PsyTestChart = (n, e, size) => {
 
             <Scatter dataKey="neuroticism" fill="#21A038" shape={<Dot r={10}/>}/>
         </ScatterChart>
-        </Container>
+        </ResponsiveContainer>
     );
 }

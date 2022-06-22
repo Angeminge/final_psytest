@@ -168,34 +168,33 @@ export class Scene extends React.Component {
       if (scene.intro) {
         return(
           <>
-              < >
-              <Col type="calc" offsetS={1} offsetM={2} offsetL={3} offsetXL={4} sizeS={1} sizeM={2} sizeL={3} sizeXL={4} />
-              <h1 className='textWrapper'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
+          <h1 className='textWrapper'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
               {
                 scene.question.options.map((item) => {
                   return (
                     <Row>
-                      <Button key={'-1.'+item.id} scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%' }} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={true}>
+                      <Button key={'-1.'+item.id} scaleOnInteraction = {false} scaleOnHover = {false} scaleOnPress = {false} style={{ marginBottom: '12px', width: '100%', height: '4rem'}} stretch={true} size="l" onClick={ () => this.push({choice: item.text[0]}) } focused ={false} outlined={true}>
                       <div className='butTextWrapper'> {item.text[0]} </div>
                       </Button>
                     </Row>
                   );
                 })
               }
-            </>
-            </>
+          </>
         );
       } else if (scene.done) {
+        //desktop
         if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
         return(
           <>
+            <Col>
             <Row className='rowWrapper'>
               <Col className='centerPic'>
-                <img src={'/images/'+ scene.type.img} width={400}/>
+                <img src={'/images/'+ scene.type.img} width={size}/>
               </Col>
               <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
-                <h1 className='result-h'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
-                <p className='result-p'>{scene.type.description}</p>
+                <h1 className='centerText'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
+                <p className=''>{scene.type.description}</p>
                 {
                     scene.question.options.map((item) => {
                       return (
@@ -203,7 +202,7 @@ export class Scene extends React.Component {
                             <Button key={scene.id+'.'+item.id}
                                     scaleOnHover={true}
                                     scaleOnPress={false}
-                                    style={{marginBottom: '12px', width: '100%'}}
+                                    style={{marginBottom: '12px', width: '100%', height: '3.3rem'}}
                                     stretch={true} size="s"
                                     onClick={() => this.push({choice: item.text[0]})}>
                               <div className='butTextWrapper'> {item.text[0]} </div>
@@ -213,6 +212,7 @@ export class Scene extends React.Component {
                   }
               </Col>
             </Row>
+            </Col>
             </>
         ); 
       } else {
@@ -243,6 +243,7 @@ export class Scene extends React.Component {
         ); 
       }
       } else {
+        //desktop
         if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
           return (
               <Row className="inline">
@@ -256,7 +257,7 @@ export class Scene extends React.Component {
                             <Button key={scene.id+'.'+item.id}
                                     scaleOnHover={true}
                                     scaleOnPress={false}
-                                    style={{marginBottom: '12px', width: '100%'}}
+                                    style={{marginBottom: '12px', width: '100%', height: '3.3rem'}}
                                     stretch={true} size="s"
                                     onClick={() => this.push({choice: item.text[0]})}>
                               <div className='butTextWrapper'> {item.text[0]} </div>

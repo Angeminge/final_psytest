@@ -38,21 +38,21 @@
 
 @media screen and (min-width: 1120px) and (max-width: 1536px){
     .butTextWrapper{
-        font-size: 100%;
+        font-size: 1.2rem;
         /* font-size: 140%; */
     }
 }
 
 @media screen and (min-width: 1538px) and (max-width: 1918px){
     .butTextWrapper{
-        font-size: 100%;
+        font-size: 1.4rem;
         /* font-size: 140%; */
     }
 }
 
 @media screen and (min-width: 1920px){
     .butTextWrapper{
-        font-size: 100%;
+        font-size: 1.8rem;
         /* font-size: 170%; */
     }
 }

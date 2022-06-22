@@ -32,21 +32,21 @@
 
 @media screen and (min-width: 1120px) and (max-width: 1536px){
     .textWrapper{
-        font-size: 130%;
+        font-size: 1.5rem;
         /* font-size: 170%; */
     }
 }
 
 @media screen and (min-width: 1538px) and (max-width: 1918px){
     .textWrapper{
-        font-size: 130%;
+        font-size: 1.8rem;
         /* font-size: 170%; */
     }
 }
 
 @media screen and (min-width: 1920px){
     .textWrapper{
-        font-size: 130%;
+        font-size: 2rem;
         /* font-size: 200%; */
     }
 }
