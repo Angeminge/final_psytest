@@ -128,17 +128,6 @@ function* script(r: SberRequest) {
         },
       ]
     };
-
-    if (!flag) {
-      state.question.options.push({
-        text: ['Оценить смартап'],
-        koe: {
-          e: 0,
-          n: 0,
-          l: 0
-        }
-      });
-    }
     rsp.data = state;
   }
 
@@ -222,7 +211,7 @@ function* script(r: SberRequest) {
     yield rsp;
   }
   
-  rsp.kbrd = ['Помощь'];
+  rsp.kbrd = ['Оценить', 'Помощь'];
   getPsytype();
   yield rsp;
 
@@ -238,11 +227,11 @@ function* script(r: SberRequest) {
           rsp.msg = 'Поставь навыку оценку';
           rsp.body.messageName = 'CALL_RATING';
           flag = true;
+          yield rsp;
+          rsp = r.buildRsp();
+          rsp.kbrd = ['Помощь'];
+          continue;
         }
-        yield rsp;
-        rsp = r.buildRsp();
-        rsp.kbrd = ['Помощь'];
-        continue;
       }
       yield rsp;
       continue;
