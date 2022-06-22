@@ -185,34 +185,63 @@ export class Scene extends React.Component {
       } else if (scene.done) {
         //desktop
         if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
-        return(
-          <>
-            <Row className='inline'>
-              <Col className='centerPic'>
-                <img src={'/images/'+ scene.type.img} width={size}/>
-              </Col>
-              <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
-                <h1 className='centerText'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
-                <p className='textWrapper'>{scene.type.description}</p>
-                {
-                    scene.question.options.map((item) => {
-                      return (
-                          <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
-                            <Button key={scene.id+'.'+item.id}
-                                    scaleOnHover={true}
-                                    scaleOnPress={false}
-                                    style={{marginBottom: '12px', width: '100%', height: '3.3rem'}}
-                                    stretch={true} size="s"
-                                    onClick={() => this.push({choice: item.text[0]})}>
-                              <div className='butTextWrapper'> {item.text[0]} </div>
-                            </Button>
-                          </Row>);
-                    })
-                  }
-              </Col>
-            </Row>
-            </>
-        ); 
+          if (document.documentElement.clientWidth < 900 || document.documentElement.clientHeight < 500) {
+            return(
+              <>
+                <Row className='rowWrapper'>
+                  <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
+                    <h1 className='centerText'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
+                    <p className='textWrapper'>{scene.type.description}</p>
+                    {
+                        scene.question.options.map((item) => {
+                          return (
+                              <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
+                                <Button key={scene.id+'.'+item.id}
+                                        scaleOnHover={true}
+                                        scaleOnPress={false}
+                                        style={{marginBottom: '12px', width: '100%', height: '3.3rem'}}
+                                        stretch={true} size="s"
+                                        onClick={() => this.push({choice: item.text[0]})}>
+                                  <div className='butTextWrapper'> {item.text[0]} </div>
+                                </Button>
+                              </Row>);
+                        })
+                      }
+                  </Col>
+                </Row>
+                </>
+            ); 
+          } else {
+            //pro
+            return(
+              <>
+                <Row className='inline'>
+                  <Col className='centerPic'>
+                    <img src={'/images/'+ scene.type.img} width={size}/>
+                  </Col>
+                  <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
+                    <h1 className='centerText'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
+                    <p className='textWrapper'>{scene.type.description}</p>
+                    {
+                        scene.question.options.map((item) => {
+                          return (
+                              <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
+                                <Button key={scene.id+'.'+item.id}
+                                        scaleOnHover={true}
+                                        scaleOnPress={false}
+                                        style={{marginBottom: '12px', width: '100%', height: '3.3rem'}}
+                                        stretch={true} size="s"
+                                        onClick={() => this.push({choice: item.text[0]})}>
+                                  <div className='butTextWrapper'> {item.text[0]} </div>
+                                </Button>
+                              </Row>);
+                        })
+                      }
+                  </Col>
+                </Row>
+                </>
+            ); 
+          }
       } else {
         return(
           <>
@@ -243,7 +272,33 @@ export class Scene extends React.Component {
       } else {
         //desktop
         if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
-          return (
+          if (document.documentElement.clientWidth < 900 || document.documentElement.clientHeight < 500) {
+            return (
+              <Row className="rowWrapper">
+                <Col type="rel">
+                  <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
+                  <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
+                  {
+                    scene.question.options.map((item) => {
+                      return (
+                          <Row type="rel" sizeS={4} sizeM={6} sizeL={6} sizeXL={6}>
+                            <Button key={scene.id+'.'+item.id}
+                                    scaleOnHover={true}
+                                    scaleOnPress={false}
+                                    style={{marginBottom: '12px', width: '100%', height: '3.3rem'}}
+                                    stretch={true} size="s"
+                                    onClick={() => this.push({choice: item.text[0]})}>
+                              <div className='butTextWrapper'> {item.text[0]} </div>
+                            </Button>
+                          </Row>);
+                    })
+                  }
+                </Col>
+              </Row>
+          );
+          } else {
+            //pro
+            return (
               <Row className="inline">
                 <Col className="inline-content" type="rel">
                   <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
@@ -269,6 +324,7 @@ export class Scene extends React.Component {
                 </Col>
               </Row>
           );
+          }
         } 
         else {
           return (
