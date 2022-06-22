@@ -187,14 +187,13 @@ export class Scene extends React.Component {
         if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
         return(
           <>
-            <Col>
-            <Row className='rowWrapper'>
+            <Row className='inline'>
               <Col className='centerPic'>
                 <img src={'/images/'+ scene.type.img} width={size}/>
               </Col>
               <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
                 <h1 className='centerText'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
-                <p className=''>{scene.type.description}</p>
+                <p className='textWrapper'>{scene.type.description}</p>
                 {
                     scene.question.options.map((item) => {
                       return (
@@ -212,7 +211,6 @@ export class Scene extends React.Component {
                   }
               </Col>
             </Row>
-            </Col>
             </>
         ); 
       } else {
@@ -292,9 +290,6 @@ export class Scene extends React.Component {
                           </Row>);
                     })
                   }
-                </div>
-                <div className="incol-chart">
-                  {PsyTestChart(scene.n, scene.e, size)}
                 </div>
               </div>
           );

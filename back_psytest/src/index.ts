@@ -203,6 +203,7 @@ function* script(r: SberRequest) {
     yield rsp;
   }
   
+  rsp.kbrd = [];
   getPsytype();
   yield rsp;
 
