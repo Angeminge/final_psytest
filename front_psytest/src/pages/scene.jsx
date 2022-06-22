@@ -187,10 +187,8 @@ export class Scene extends React.Component {
         if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
           if (document.documentElement.clientWidth < 900 || document.documentElement.clientHeight < 500) {
             return(
-              <>
-                <Row className='rowWrapper'>
-                  <Col className = 'results' type="rel" sizeS={4} sizeM={3} sizeL={3} sizeXL={6}>
-                    <h1 className='centerText'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
+              <div className="incol">
+                <h1 className='centerText'>{(characterID == 'joy'? 'Ты ' : 'Вы ') + scene.type.name}</h1>
                     <p className='textWrapper'>{scene.type.description}</p>
                     {
                         scene.question.options.map((item) => {
@@ -199,7 +197,7 @@ export class Scene extends React.Component {
                                 <Button key={scene.id+'.'+item.id}
                                         scaleOnHover={true}
                                         scaleOnPress={false}
-                                        style={{marginBottom: '12px', width: '100%', height: '3.3rem'}}
+                                        style={{marginBottom: '12px', width: '100%', height: '3rem'}}
                                         stretch={true} size="s"
                                         onClick={() => this.push({choice: item.text[0]})}>
                                   <div className='butTextWrapper'> {item.text[0]} </div>
@@ -207,9 +205,7 @@ export class Scene extends React.Component {
                               </Row>);
                         })
                       }
-                  </Col>
-                </Row>
-                </>
+                </div>
             ); 
           } else {
             //pro
@@ -274,9 +270,8 @@ export class Scene extends React.Component {
         if (document.documentElement.clientWidth>=document.documentElement.clientHeight){
           if (document.documentElement.clientWidth < 900 || document.documentElement.clientHeight < 500) {
             return (
-              <Row className="rowWrapper">
-                <Col type="rel">
-                  <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
+             <>
+             <ProgressBar key={scene.id} completed={Math.round(scene.id/57*100)}/>
                   <h1 className='centerText'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
                   {
                     scene.question.options.map((item) => {
@@ -293,8 +288,7 @@ export class Scene extends React.Component {
                           </Row>);
                     })
                   }
-                </Col>
-              </Row>
+             </>
           );
           } else {
             //pro

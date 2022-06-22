@@ -2,10 +2,10 @@ import { Dialute, SberRequest } from 'dialute';
 import { data } from './data';
 import { psytypes } from './psytypes';
 
-const questions = data;
-var flag = false;
-
 function* script(r: SberRequest) {
+  const questions = data;
+  var flag = false;
+
   var rsp = r.buildRsp();
 
   var lastIds: any = [];
