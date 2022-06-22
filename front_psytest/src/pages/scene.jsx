@@ -167,7 +167,7 @@ export class Scene extends React.Component {
     if (scene) {
       if (scene.intro) {
         return(
-          <>
+          <div className="incol">
           <h1 className='textWrapper'> { characterID == 'joy'? scene.question.textj : scene.question.texts } </h1>
               {
                 scene.question.options.map((item) => {
@@ -180,7 +180,7 @@ export class Scene extends React.Component {
                   );
                 })
               }
-          </>
+          </div>
         );
       } else if (scene.done) {
         //desktop
